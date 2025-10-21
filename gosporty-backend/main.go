@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
-	"os" 
+	"os"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
