@@ -24,12 +24,13 @@
     "swiper": "^12.0.2",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+"scripts": {
+  "start": "react-scripts start",
+  "build": "cross-env CI=false react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject",
+  "vercel-build": "npm run build"
+},
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -50,8 +51,10 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
+    "cross-env": "^10.1.0",
     "postcss": "^8.5.6",
     "postcss-cli": "^11.0.1",
+    "serve": "^14.2.5",
     "tailwindcss": "^3.4.18"
   }
 }
