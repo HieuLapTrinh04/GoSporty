@@ -36,17 +36,17 @@ func main() {
 	// =================================================================
 	// SỬA Ở ĐÂY 1: Cấu hình CORS chuẩn cho Vercel và Local
 	// =================================================================
-	clientURL := os.Getenv("CLIENT_URL") // Lấy URL frontend từ biến môi trường
+	clientURL := os.Getenv("CLIENT_URL")
 	if clientURL == "" {
-		clientURL = "http://localhost:3000" // Fallback cho local dev (React thường chạy ở 3000)
+		clientURL = "https://go-sporty-htuq.vercel.app" // URL frontend Vercel của bạn
 	}
 
 	log.Println("Allowing CORS for client:", clientURL)
 
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{clientURL}, // Chỉ cho phép URL này
+		AllowedOrigins:   []string{clientURL},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"Content-Type", "Authorization"}, // Cho phép gửi kèm token
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
 	})
 
@@ -57,9 +57,9 @@ func main() {
 	// =================================================================
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080" // Dùng port 8080 khi chạy local (nếu PORT không được set)
+		port = "10000" // fallback khi chạy local
 	}
+	log.Println("Server running on port:", port)
+	log.Fatal(http.ListenAndServe(":"+port, handler))
 
-	log.Println("✅ Server running on port:", port)
-	log.Fatal(http.ListenAndServe(":"+port, handler)) // <-- Dùng biến port
 }
