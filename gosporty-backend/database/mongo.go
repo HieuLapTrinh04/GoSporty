@@ -1,36 +1,40 @@
 package database
 
 import (
-    "context"
-    "log"
-    "os"
-    "time"
+	"context"
+	"log"
+	"os"
+	"time"
 
-    "go.mongodb.org/mongo-driver/mongo"
-    "go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var DB *mongo.Database
 
 func ConnectDB() {
-    uri := os.Getenv("MONGO_URI")
-    if uri == "" {
-        uri = "mongodb://localhost:27017"
-    }
+	uri := os.Getenv("MONGO_URI")
+	if uri == "" {
+		uri = "mongodb://localhost:27017"
+	}
 
-    client, err := mongo.NewClient(options.Client().ApplyURI(uri))
-    if err != nil {
-        log.Fatal(err)
-    }
+	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-    defer cancel()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
 
-    err = client.Connect(ctx)
-    if err != nil {
-        log.Fatal(err)
-    }
+	err = client.Connect(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    DB = client.Database("gosporty")
-    log.Println("✅ MongoDB connected")
+	DB = client.Database("gosporty")
+	log.Println("✅ MongoDB connected")
+}
+
+func GetCollection(name string) *mongo.Collection {
+	return DB.Collection(name)
 }
